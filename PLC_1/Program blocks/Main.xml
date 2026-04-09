@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V21" />
+  <SW.Blocks.OB ID="0">
+    <AttributeList>
+      <Interface>
+        <Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+          <Section Name="Input">
+            <Member Name="Initial_Call" Datatype="Bool" Informative="true">
+              <Comment>
+                <MultiLanguageText Lang="en-US">Initial call of this OB</MultiLanguageText>
+              </Comment>
+            </Member>
+            <Member Name="Remanence" Datatype="Bool" Informative="true">
+              <Comment>
+                <MultiLanguageText Lang="en-US">=True, if remanent data are available</MultiLanguageText>
+              </Comment>
+            </Member>
+          </Section>
+          <Section Name="Temp" />
+          <Section Name="Constant" />
+        </Sections>
+      </Interface>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>Main</Name>
+      <Namespace />
+      <Number>1</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SecondaryType>ProgramCycle</SecondaryType>
+      <SetENOAutomatically>false</SetENOAutomatically>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource>
+            <FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v5">
+              <Parts>
+                <Access Scope="GlobalVariable" UId="21">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="start" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="22">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="suspendResume" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="23">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="manualMode" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="24">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="emergencyStop" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="25">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="manualRed" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="26">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="manualYellow" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="27">
+                  <Symbol>
+                    <Component Name="Button" />
+                    <Component Name="manualGreen" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="28">
+                  <Symbol>
+                    <Component Name="Output_3" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="29">
+                  <Symbol>
+                    <Component Name="Output_4" />
+                  </Symbol>
+                </Access>
+                <Access Scope="GlobalVariable" UId="30">
+                  <Symbol>
+                    <Component Name="Output_5" />
+                  </Symbol>
+                </Access>
+                <Call UId="31">
+                  <CallInfo Name="Trafiklys" BlockType="FB">
+                    <Instance Scope="GlobalVariable" UId="32">
+                      <Component Name="Trafiklys_DB" />
+                    </Instance>
+                    <Parameter Name="i_start" Section="Input" Type="Bool" />
+                    <Parameter Name="i_suspendResume" Section="Input" Type="Bool" />
+                    <Parameter Name="i_manualMode" Section="Input" Type="Bool" />
+                    <Parameter Name="i_pushButtonEmergencyStop" Section="Input" Type="Bool" />
+                    <Parameter Name="i_manualRed" Section="Input" Type="Bool" />
+                    <Parameter Name="i_manualYellow" Section="Input" Type="Bool" />
+                    <Parameter Name="i_manualGreen" Section="Input" Type="Bool" />
+                    <Parameter Name="o_red" Section="Output" Type="Bool" />
+                    <Parameter Name="o_yellow" Section="Output" Type="Bool" />
+                    <Parameter Name="o_green" Section="Output" Type="Bool" />
+                  </CallInfo>
+                </Call>
+              </Parts>
+              <Wires>
+                <Wire UId="33">
+                  <Powerrail />
+                  <NameCon UId="31" Name="en" />
+                </Wire>
+                <Wire UId="34">
+                  <IdentCon UId="21" />
+                  <NameCon UId="31" Name="i_start" />
+                </Wire>
+                <Wire UId="35">
+                  <IdentCon UId="22" />
+                  <NameCon UId="31" Name="i_suspendResume" />
+                </Wire>
+                <Wire UId="36">
+                  <IdentCon UId="23" />
+                  <NameCon UId="31" Name="i_manualMode" />
+                </Wire>
+                <Wire UId="37">
+                  <IdentCon UId="24" />
+                  <NameCon UId="31" Name="i_pushButtonEmergencyStop" />
+                </Wire>
+                <Wire UId="38">
+                  <IdentCon UId="25" />
+                  <NameCon UId="31" Name="i_manualRed" />
+                </Wire>
+                <Wire UId="39">
+                  <IdentCon UId="26" />
+                  <NameCon UId="31" Name="i_manualYellow" />
+                </Wire>
+                <Wire UId="40">
+                  <IdentCon UId="27" />
+                  <NameCon UId="31" Name="i_manualGreen" />
+                </Wire>
+                <Wire UId="41">
+                  <NameCon UId="31" Name="o_red" />
+                  <IdentCon UId="28" />
+                </Wire>
+                <Wire UId="42">
+                  <NameCon UId="31" Name="o_yellow" />
+                  <IdentCon UId="29" />
+                </Wire>
+                <Wire UId="43">
+                  <NameCon UId="31" Name="o_green" />
+                  <IdentCon UId="30" />
+                </Wire>
+              </Wires>
+            </FlgNet>
+          </NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource />
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource>
+            <StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v4">
+              <Access Scope="GlobalVariable" UId="21">
+                <Symbol UId="22">
+                  <Component Name="Button" UId="23">
+                    <BooleanAttribute Name="HasQuotes" UId="24">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="25" />
+                  <Component Name="start" UId="26" />
+                </Symbol>
+              </Access>
+              <Blank UId="27" />
+              <Token Text=":=" UId="28" />
+              <Blank UId="29" />
+              <Access Scope="GlobalVariable" UId="30">
+                <Symbol UId="31">
+                  <Component Name="Input_0" UId="32">
+                    <BooleanAttribute Name="HasQuotes" UId="33">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="34" />
+              <NewLine UId="35" />
+              <Access Scope="GlobalVariable" UId="36">
+                <Symbol UId="37">
+                  <Component Name="Button" UId="38">
+                    <BooleanAttribute Name="HasQuotes" UId="39">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="40" />
+                  <Component Name="suspendResume" UId="41" />
+                </Symbol>
+              </Access>
+              <Blank UId="42" />
+              <Token Text=":=" UId="43" />
+              <Blank UId="44" />
+              <Access Scope="GlobalVariable" UId="45">
+                <Symbol UId="46">
+                  <Component Name="Input_1" UId="47">
+                    <BooleanAttribute Name="HasQuotes" UId="48">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="49" />
+              <NewLine UId="50" />
+              <Access Scope="GlobalVariable" UId="51">
+                <Symbol UId="52">
+                  <Component Name="Button" UId="53">
+                    <BooleanAttribute Name="HasQuotes" UId="54">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="55" />
+                  <Component Name="manualMode" UId="56" />
+                </Symbol>
+              </Access>
+              <Blank UId="57" />
+              <Token Text=":=" UId="58" />
+              <Blank UId="59" />
+              <Access Scope="GlobalVariable" UId="60">
+                <Symbol UId="61">
+                  <Component Name="Input_2" UId="62">
+                    <BooleanAttribute Name="HasQuotes" UId="63">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="64" />
+              <NewLine UId="65" />
+              <Access Scope="GlobalVariable" UId="66">
+                <Symbol UId="67">
+                  <Component Name="Button" UId="68">
+                    <BooleanAttribute Name="HasQuotes" UId="69">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="70" />
+                  <Component Name="emergencyStop" UId="71" />
+                </Symbol>
+              </Access>
+              <Blank UId="72" />
+              <Token Text=":=" UId="73" />
+              <Blank UId="74" />
+              <Access Scope="GlobalVariable" UId="75">
+                <Symbol UId="76">
+                  <Component Name="Input_3" UId="77">
+                    <BooleanAttribute Name="HasQuotes" UId="78">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="79" />
+              <NewLine UId="80" />
+              <Access Scope="GlobalVariable" UId="81">
+                <Symbol UId="82">
+                  <Component Name="Button" UId="83">
+                    <BooleanAttribute Name="HasQuotes" UId="84">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="85" />
+                  <Component Name="manualRed" UId="86" />
+                </Symbol>
+              </Access>
+              <Blank UId="87" />
+              <Token Text=":=" UId="88" />
+              <Blank UId="89" />
+              <Access Scope="GlobalVariable" UId="90">
+                <Symbol UId="91">
+                  <Component Name="Input_4" UId="92">
+                    <BooleanAttribute Name="HasQuotes" UId="93">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="94" />
+              <NewLine UId="95" />
+              <Access Scope="GlobalVariable" UId="96">
+                <Symbol UId="97">
+                  <Component Name="Button" UId="98">
+                    <BooleanAttribute Name="HasQuotes" UId="99">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="100" />
+                  <Component Name="manualYellow" UId="101" />
+                </Symbol>
+              </Access>
+              <Blank UId="102" />
+              <Token Text=":=" UId="103" />
+              <Blank UId="104" />
+              <Access Scope="GlobalVariable" UId="105">
+                <Symbol UId="106">
+                  <Component Name="Input_5" UId="107">
+                    <BooleanAttribute Name="HasQuotes" UId="108">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="109" />
+              <NewLine UId="110" />
+              <Access Scope="GlobalVariable" UId="111">
+                <Symbol UId="112">
+                  <Component Name="Button" UId="113">
+                    <BooleanAttribute Name="HasQuotes" UId="114">true</BooleanAttribute>
+                  </Component>
+                  <Token Text="." UId="115" />
+                  <Component Name="manualGreen" UId="116" />
+                </Symbol>
+              </Access>
+              <Blank UId="117" />
+              <Token Text=":=" UId="118" />
+              <Blank UId="119" />
+              <Access Scope="GlobalVariable" UId="120">
+                <Symbol UId="121">
+                  <Component Name="Input_6" UId="122">
+                    <BooleanAttribute Name="HasQuotes" UId="123">true</BooleanAttribute>
+                  </Component>
+                </Symbol>
+              </Access>
+              <Token Text=";" UId="124" />
+            </StructuredText>
+          </NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="10" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="12" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="13" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>"Main Program Sweep (Cycle)"</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.OB>
+</Document>

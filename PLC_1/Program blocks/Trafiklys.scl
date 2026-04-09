@@ -1,0 +1,167 @@
+﻿FUNCTION_BLOCK "Trafiklys"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR_INPUT 
+      i_start : Bool;   // Start button
+      i_suspendResume : Bool;   // Suspend Resume button
+      i_manualMode : Bool;   // Manual mode button
+      i_pushButtonEmergencyStop : Bool;   // Push button emergency stop button
+      i_manualRed : Bool;   // Manual mode red light button
+      i_manualYellow : Bool;   // Manual mode yellow light button
+      i_manualGreen : Bool;   // Manual mode green light button
+   END_VAR
+
+   VAR_OUTPUT 
+      o_red : Bool;   // Red light
+      o_yellow : Bool;   // Yellow light
+      o_green : Bool;   // Green light
+   END_VAR
+
+   VAR 
+      statG0_step : Array[100..102] of Bool := [true];   // step array for PBES sequence
+      statG1_step : Array[0..4] of Bool := [false, TRUE];   // step array for traffic light sequence
+      statG2_step : Array[200..201] of Bool;   // step array for suspend resume sequence
+      statG3_step : Array[300..301] of Bool;   // step array for manual sequence
+      statGManual : Array[5..5] of Bool;   // step array for manual control
+      statSuspendResumeTrigger {InstructionName := 'R_TRIG'; LibVersion := '1.0'; S7_SetPoint := 'False'} : R_TRIG;   // suspend resume rising edge trigger
+      statTime { S7_SetPoint := 'True'} : Time := T#5s;
+      statTimer_G1_step {InstructionName := 'IEC_TIMER'; LibVersion := '1.0'; S7_SetPoint := 'False'} : Array[1..4] of IEC_TIMER;
+   END_VAR
+
+   VAR CONSTANT 
+      TIME5S : Time := T#5s;
+   END_VAR
+
+
+BEGIN
+	REGION G0_sequence - Main sequence and control of Push Button Emergency Stop
+	    // This region handles the initial sequence logic of the process.
+	    // Steps within this sequence are toggled based on the state of PBES input.
+	    IF #statG0_step[100] THEN
+	        #statG0_step[101] := TRUE;
+	        #statG0_step[100] := FALSE;
+	    ELSIF #statG0_step[101] AND #i_pushButtonEmergencyStop THEN
+	        #statG0_step[102] := TRUE;
+	        #statG0_step[101] := FALSE;
+	    ELSIF #statG0_step[102] AND NOT #i_pushButtonEmergencyStop THEN
+	        #statG0_step[101] := TRUE;
+	        #statG0_step[102] := FALSE;
+	    END_IF;
+	END_REGION
+	REGION G1 sequence - Traffic light sequence
+	    // This region manages the timer-based transitions for the G1 sequence.
+	    // Timers are used to delay transitions between steps.
+	    // Activation of G1 sequence is controlled by G0_step[102] or G3_step[301].
+	    // 
+	    //PRE Code
+	    //Timers are initialized
+	    
+	    #statTimer_G1_step[1].TON(PT := #TIME5S,
+	                         IN := #statG1_step[1]);
+	    #statTimer_G1_step[2].TON(PT := #TIME5S,
+	                         IN := #statG1_step[2]);
+	    #statTimer_G1_step[3].TON(PT := #TIME5S,
+	                         IN := #statG1_step[3]);
+	    #statTimer_G1_step[4].TON(PT := #TIME5S,
+	                         IN := #statG1_step[4]);
+	    //Sequence code
+	    //
+	    IF #statG0_step[102] OR #statG3_step[301] THEN
+	        #statG1_step[0] := TRUE;
+	        FILL_BLK(IN := FALSE,
+	                 COUNT := 4,
+	                 OUT => #statG1_step[1]);
+	        
+	    END_IF;
+	    IF NOT #statG2_step[201] THEN
+	        IF #statG1_step[0] AND #i_start THEN
+	            #statG1_step[1] := TRUE;
+	            #statG1_step[0] := FALSE;
+	        ELSIF #statG1_step[1] AND #statTimer_G1_step[1].Q THEN
+	            #statG1_step[2] := TRUE;
+	            #statG1_step[1] := FALSE;
+	        ELSIF #statG1_step[2] AND #statTimer_G1_step[2].Q THEN
+	            #statG1_step[3] := TRUE;
+	            #statG1_step[2] := FALSE;
+	        ELSIF #statG1_step[3] AND #statTimer_G1_step[3].Q THEN
+	            #statG1_step[4] := TRUE;
+	            #statG1_step[3] := FALSE;
+	        ELSIF #statG1_step[4] AND #statTimer_G1_step[4].Q THEN
+	            #statG1_step[1] := TRUE;
+	            #statG1_step[4] := FALSE;
+	        END_IF;
+	    END_IF;
+	
+	END_REGION
+	REGION G2_sequence - control of suspend-resume of control sequence
+	    // This region implements a simple flip-flop mechanism using the SR latch.
+	    // The sequence is enabled when the G0_step[101] is active.
+	    //PRE code initialize suspend-resume rising trigger
+	    
+	    #statSuspendResumeTrigger(CLK := #"i_suspendResume");
+	    //Sequence code
+	    //
+	    IF #statG0_step[101] THEN
+	        IF (NOT #statG2_step[200] AND NOT #statG2_step[201]) THEN
+	            #statG2_step[200] := true;
+	        END_IF;
+	        IF #statG2_step[200] AND #statSuspendResumeTrigger.Q THEN
+	            #statG2_step[201] := TRUE;
+	            #statG2_step[200] := FALSE;
+	        ELSIF #statG2_step[201] AND #statSuspendResumeTrigger.Q THEN
+	            #statG2_step[200] := TRUE;
+	            #statG2_step[201] := FALSE;
+	        END_IF;
+	    ELSE
+	        FILL_BLK(IN := FALSE,
+	                 COUNT := 2,
+	                 OUT => #statG2_step[200]);
+	    END_IF;
+	    //
+	    
+	END_REGION
+	REGION G3_sequence - Control of manual mode for control sequence
+	    // G3 sequence logic is controlled by the G0_step[101] and a manual toggle (Manu).
+	    // It ensures only one of the steps 300 or 301 is active at a time.
+	    // 
+	    //Sequence code
+	    //
+	    IF #statG0_step[101] THEN
+	        IF (NOT #statG3_step[300] AND NOT #statG3_step[301]) THEN
+	            #statG3_step[300] := true;
+	        END_IF;
+	        IF #statG3_step[300] AND #i_manualMode THEN
+	            #statG3_step[301] := TRUE;
+	            #statG3_step[300] := FALSE;
+	        ELSIF #statG3_step[301] AND NOT #i_manualMode THEN
+	            #statG3_step[300] := TRUE;
+	            #statG3_step[301] := FALSE;
+	        END_IF;
+	    ELSE
+	        FILL_BLK(IN := FALSE,
+	                 COUNT := 2,
+	                 OUT => #statG3_step[300]);
+	    END_IF;
+	    // Statement section REGION
+	END_REGION
+	REGION GManual sequence - Manual control step
+	    // This region defines manual control logic, overriding automatic sequences if needed.
+	    // The GManual step is activated based on the status of G3_step[301]
+	    
+	    IF #statG3_step[301] THEN
+	        #statGManual[5] := TRUE;
+	    ELSE
+	        #statGManual[5] := FALSE;
+	    END_IF;
+	END_REGION
+	REGION Post Code8 - Output control
+	    // This region sets output flags for Red, Yellow, and Green indicators.
+	    // Flags are set based on the active step in the G1 sequence and manual overrides.
+	    #o_red := #statG1_step[1] OR #statG1_step[2] OR #statGManual[5] AND #i_manualRed;
+	    #o_yellow := #statG1_step[2] OR #statG1_step[4] OR #statGManual[5] AND #i_manualYellow;
+	    #o_green := #statG1_step[3] OR #statGManual[5] AND #i_manualGreen;
+	END_REGION
+	
+	
+END_FUNCTION_BLOCK
+
