@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V21" />
+  <SW.Types.PlcStruct ID="0">
+    <AttributeList>
+      <Interface>
+        <Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v5">
+          <Section Name="None">
+            <Member Name="start" Datatype="Bool" />
+            <Member Name="stop" Datatype="Bool" />
+            <Member Name="reset" Datatype="Bool" />
+            <Member Name="emergencyStop" Datatype="Bool" />
+            <Member Name="suspendResume" Datatype="Bool" />
+            <Member Name="manualMode" Datatype="Bool" />
+            <Member Name="manualRed" Datatype="Bool" />
+            <Member Name="manualYellow" Datatype="Bool" />
+            <Member Name="manualGreen" Datatype="Bool" />
+          </Section>
+        </Sections>
+      </Interface>
+      <Name>ST_Button</Name>
+      <Namespace />
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="3" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Types.PlcStruct>
+</Document>

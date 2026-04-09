@@ -23,9 +23,9 @@ VERSION : 0.1
       statG2_step : Array[200..201] of Bool;   // step array for suspend resume sequence
       statG3_step : Array[300..301] of Bool;   // step array for manual sequence
       statGManual : Array[5..5] of Bool;   // step array for manual control
-      statSuspendResumeTrigger {InstructionName := 'R_TRIG'; LibVersion := '1.0'; S7_SetPoint := 'False'} : R_TRIG;   // suspend resume rising edge trigger
-      statTime { S7_SetPoint := 'True'} : Time := T#5s;
-      statTimer_G1_step {InstructionName := 'IEC_TIMER'; LibVersion := '1.0'; S7_SetPoint := 'False'} : Array[1..4] of IEC_TIMER;
+      statSuspendResumeTrigger {InstructionName := 'R_TRIG'; LibVersion := '1.0'} : R_TRIG;   // suspend resume rising edge trigger
+      statTime : Time := T#5s;
+      statTimer_G1_step {InstructionName := 'IEC_TIMER'; LibVersion := '1.0'} : Array[1..4] of IEC_TIMER;
    END_VAR
 
    VAR CONSTANT 

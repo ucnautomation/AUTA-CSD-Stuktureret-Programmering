@@ -1,0 +1,10 @@
+﻿FUNCTION_BLOCK "Block_1"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+
+BEGIN
+	//jeg kan her lave en kommentar som jeg faktisk kan læse
+	//
+	
+END_FUNCTION_BLOCK
+
