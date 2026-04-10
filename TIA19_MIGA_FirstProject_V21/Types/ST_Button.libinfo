@@ -1,6 +1,8 @@
 ﻿LibraryType:
   Guid: a23ec652-c996-415c-b898-97421d85ee81
 LibraryVersion:
-  VersionNumber: 0.0.1
+  VersionNumber: 0.0.2
   Author: Automation
   IsDefault: true
+  Comment:
+    en-US: Added Pedestrian button bool

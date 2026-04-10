@@ -15,6 +15,7 @@
             <Member Name="manualRed" Datatype="Bool" />
             <Member Name="manualYellow" Datatype="Bool" />
             <Member Name="manualGreen" Datatype="Bool" />
+            <Member Name="pedestrian" Datatype="Bool" />
           </Section>
         </Sections>
       </Interface>
